@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks</title>
+</head>
+
+<body>
+  <p onClick="makeGreen()">Make Green!</p>
+  <!-- 
+    To figure where a certain script runs/originates from:
+    1) Inspect the element
+    2) Right click on the source code in the Elements panel
+    3) Choose "Break on - attribute modifications" 
+  -->
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'Hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('Hello console');
+
+    // Interpolated - interpolates the 2nd string into the first one    
+    console.log('Hello I am a %s string!', 'loooooong');
+    // With ES6 we could now use backticks to include a variable
+
+    // Styled
+    console.log('%cI am some great text',
+      'font-size: 30px; background: red; text-shadow: 10px 10px 0 blue;');
+
+    // Warning
+    console.warn('Something\'s off...');
+
+    // Error
+    console.error('Something\'s REALLY off...');
+
+    // Info
+    console.info('Here\'s some info...');
+
+    // Testing - if true, doesn't do anything
+    // If false, shows an error
+    console.assert(1 === 12, 'That is wrong');
+
+    // Another example
+    const p = document.querySelector('p');
+    console.assert(p.classList
+      .contains('ouch'),
+      'You did not select the right element!');
+
+    // Clears the console history
+    console.clear();
+
+    // Viewing DOM Elements
+    console.log(p); // Logs the element itself
+    console.dir(p); // Logs the properties and methods of the element
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+      // console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old.`);
+      console.groupEnd(`${dog.name}`);
+    });
+
+    // Counting
+    console.count('Hugo');
+
+    // Timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/lillapulay')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+    // Table
+    console.table(dogs);
+  </script>
+</body>
+
+</html>
